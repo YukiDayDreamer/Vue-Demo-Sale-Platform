@@ -4,7 +4,7 @@
       <div class="g-form-line" v-for="formLine in formData">
         <span class="g-form-label">{{ formLine.label }}：</span>
         <div class="g-form-input">
-          <input type="text" 
+          <input type="text"
           v-model="formLine.model" placeholder="请输入用户名">
         </div>
       </div>
@@ -24,7 +24,7 @@ export default {
   },
   data () {
     return {
-      
+
     }
   },
   computed: {
@@ -32,7 +32,7 @@ export default {
       let status, errorText
       if (!/@/g.test(this.usernameModel)) {
         status = false
-        errorText = '必须包含@'
+        errorText = 'Must contains @'
       }
       else {
         status = true
@@ -47,7 +47,7 @@ export default {
       let status, errorText
       if (!/@/g.test(this.usernameModel)) {
         status = false
-        errorText = '必须包含@'
+        errorText = 'Must contains @'
       }
       else {
         status = true

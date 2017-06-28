@@ -4,7 +4,7 @@
       <div class="product-board">
         <img :src="productIcon">
         <ul>
-          <router-link v-for="item in products" :to="{ path: item.path }" tag="li" active-class="active">
+          <router-link v-for="item in products" :data= "item" :key="item.key" :to="{ path: item.path }" tag="li" active-class="active">
             {{ item.name }}
           </router-link>
         </ul>
@@ -55,12 +55,15 @@ export default {
   },
   computed: {
     productIcon () {
+      console.log(this.imgMap[this.$route.path]);
+
       return this.imgMap[this.$route.path]
     }
   }
 }
 </script>
 
+<!-- Without Scoped, could be used as children router page -->
 <style>
 .detail-wrap {
   width: 1200px;

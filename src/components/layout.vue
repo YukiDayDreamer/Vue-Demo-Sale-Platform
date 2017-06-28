@@ -7,11 +7,13 @@
         </router-link>
         <div class="head-nav">
           <ul class="nav-list">
-            <li>登录</li>
+            <li> {{username}} </li>
+            <li v-if="username === ''" @click="loginClick">Login</li>
             <li class="nav-pile">|</li>
-            <li>注册</li>
+            <li v-if="username !== ''" @click="quit">Logout</li>
+            <li v-if="username === ''" @click="registerClick">Register</li>
             <li class="nav-pile">|</li>
-            <li>关于</li>
+            <li @click="aboutClick">About</li>
           </ul>
         </div>
       </div>
@@ -24,15 +26,60 @@
     <div class="app-foot">
       <p>© 2016 fishenal MIT</p>
     </div>
+    <new-dialog :isShow="isShowLoginDialog" @on-close="closeDialog('isShowLoginDialog')">
+      <logForm @has-log="onSuccessLog"></logForm>
+    </new-dialog>
+    <new-dialog :isShow="isShowRegisterDialog" @on-close="closeDialog('isShowRegisterDialog')">
+      <regForm></regForm>
+    </new-dialog>
+    <new-dialog :isShow="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+      <p>About this webpage: This report is based on data analysis.
+        It use different ways to measure the elements that affects the car market.</p>
+    </new-dialog>
   </div>
 </template>
 
 <script>
+import Dialog from './dialog'
+import logForm from './logForm'
+import regForm from './regForm'
 export default {
+  components: {
+    newDialog: Dialog,
+    logForm,
+    regForm
+  },
   data () {
     return {
-      msg:""
+      isShowLoginDialog: false,
+      isShowRegisterDialog: false,
+      isShowAboutDialog: false,
+      username: ""
     }
+  },
+  methods: {
+    loginClick () {
+      this.isShowLoginDialog = true
+    },
+    registerClick (){
+      this.isShowRegisterDialog = true
+    },
+    aboutClick () {
+      this.isShowAboutDialog = true
+    },
+    closeDialog (attr) {
+      this[attr] = false
+    },
+    onSuccessLog (data) {
+      console.log(data)
+      this.closeDialog('isShowLoginDialog')
+      this.username = data.username
+    },
+    quit () {
+      this.username = ""
+    }
+
+
   }
 }
 </script>
